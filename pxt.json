@@ -5,11 +5,11 @@
     "dependencies": {
         "core": "*",
         "radio": "*",
-        "microphone": "*"
+        "microphone": "*",
+        "datalogger": "*"
     },
     "files": [
         "README.md",
-        "main.blocks",
         "main.ts"
     ],
     "testFiles": [
@@ -23,5 +23,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
