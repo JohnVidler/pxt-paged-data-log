@@ -1,8 +1,8 @@
 //% block="Data Pages" color="#AA278D"
 namespace DataLoggerPages {
-    const MAX_SECTION = 99
-    const MAX_PAGE = 99
-    const MAX_INDEX = 11
+    const MAX_SECTION = Infinity
+    const MAX_PAGE = Infinity
+    const MAX_INDEX = Infinity
 
     let _eraseFlashOnSave = true
     let _useGroup = false
@@ -75,8 +75,8 @@ namespace DataLoggerPages {
                 if (!page)
                     return
                 
-                page.forEach((index, value) => {
-                    if( !index )
+                page.forEach((value, index) => {
+                    if( !value )
                         return
                     
                     let record: datalogger.ColumnValue[] = []
