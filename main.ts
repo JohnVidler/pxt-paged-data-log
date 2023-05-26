@@ -1,4 +1,4 @@
-//% block="Data Pages" color="#AA278D"
+//% block="Data Pages" color="#AA278D" 
 namespace DataLoggerPages {
     const MAX_SECTION = Infinity
     const MAX_PAGE = Infinity
