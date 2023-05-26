@@ -9,13 +9,45 @@ namespace DataLoggerPages {
     let _UID = ""
     let _page = 0
     let _section = 0
+    let _usingNames = false
 
     let _RAMData: number[][][] = []
+    let _NameData: string[][][] = []
 
     //% block="erase unsaved data"
-    //% group="Data"
+    //% group="Named Data"
     function eraseRAM() {
         _RAMData = []
+    }
+
+    //% block="set index $index name to $name"
+    //% group="Named Data"
+    export function setName( index: number = 0, name: string )
+    {
+        _usingNames = true
+        
+        index = Math.clamp(0, MAX_INDEX, index)
+        if (_NameData[_section] == undefined)
+            _NameData[_section] = []
+        if (_NameData[_section][_page] == undefined)
+            _NameData[_section][_page] = []
+
+        _NameData[_section][_page][index] = name
+    }
+
+    //% block="get name for index $index"
+    //% group="Named Data"
+    function getName(index: number = 0): string {
+        return _getName( _section, _page, index )
+    }
+
+    function _getName(section: number = 0, page: number = 0, index: number = 0): string {
+        index = Math.clamp(0, MAX_INDEX, index)
+        if (_NameData[section] == undefined)
+            return ""
+        if (_NameData[section][page] == undefined)
+            return ""
+        return _NameData[section][page][index] || ""
     }
 
     //% block="set data at index $index to $value"
@@ -64,6 +96,10 @@ namespace DataLoggerPages {
         columns.push("section")
         columns.push("page")
         columns.push("index")
+
+        if (_usingNames)
+            columns.push("name")
+
         columns.push("value")
         datalogger.setColumns( columns )
 
@@ -87,6 +123,10 @@ namespace DataLoggerPages {
                     record.push(datalogger.createCV("section", secIndex))
                     record.push(datalogger.createCV("page", pageIndex))
                     record.push(datalogger.createCV("index", index))
+
+                    if (_usingNames)
+                        record.push(datalogger.createCV("name", _getName(secIndex, pageIndex, index)))
+
                     record.push(datalogger.createCV("value", value))
 
                     datalogger.logData( record )
