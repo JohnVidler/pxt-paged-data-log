@@ -37,7 +37,7 @@ namespace DataLoggerPages {
 
     //% block="get name for index $index"
     //% group="Named Data"
-    function getName(index: number = 0): string {
+    export function getName(index: number = 0): string {
         return _getName( _section, _page, index )
     }
 
