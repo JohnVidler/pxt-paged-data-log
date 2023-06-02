@@ -1,3 +1,10 @@
+enum DLP_QUANTITY_RANGE {
+    //% block="the same"
+    SAME = 0,
+    //% block="unique"
+    UNIQUE = 1
+}
+
 //% block="Data Pages" color="#AA278D" 
 namespace DataLoggerPages {
     const MAX_SECTION = Infinity
@@ -9,15 +16,40 @@ namespace DataLoggerPages {
     let _UID = ""
     let _page = 0
     let _section = 0
-    let _usingNames = false
 
+    // Name/alias specific stuff
+    let _usingNames = false
+    let _uniqueSections = true;
+    let _uniquePages = true;
+
+    // The in-RAM data structures
     let _RAMData: number[][][] = []
     let _NameData: string[][][] = []
 
     //% block="erase unsaved data"
-    //% group="Named Data"
-    function eraseRAM() {
+    //% group="Data"
+    export function eraseRAM() : void {
         _RAMData = []
+    }
+
+    //% block="erase all names"
+    //% group="Named Data"
+    export function eraseNames() : void {
+        _NameData = []
+    }
+
+    //% block="names are $state on each section"
+    //% group="Named Data"
+    //% advanced=true
+    export function uniqueSections( state: DLP_QUANTITY_RANGE = DLP_QUANTITY_RANGE.UNIQUE ) : void {
+        _uniqueSections = (state == DLP_QUANTITY_RANGE.UNIQUE)
+    }
+
+    //% block="names are $state on each page"
+    //% group="Named Data"
+    //% advanced=true
+    export function uniquePages(state: DLP_QUANTITY_RANGE = DLP_QUANTITY_RANGE.UNIQUE): void {
+        _uniquePages = (state == DLP_QUANTITY_RANGE.UNIQUE);
     }
 
     //% block="set index $index name to $name"
@@ -25,14 +57,17 @@ namespace DataLoggerPages {
     export function setName( index: number = 0, name: string )
     {
         _usingNames = true
+
+        let section = _uniqueSections ? _section : 0;
+        let page = _uniquePages ? _page : 0;
         
         index = Math.clamp(0, MAX_INDEX, index)
-        if (_NameData[_section] == undefined)
-            _NameData[_section] = []
-        if (_NameData[_section][_page] == undefined)
-            _NameData[_section][_page] = []
+        if (_NameData[section] == undefined)
+            _NameData[section] = []
+        if (_NameData[section][page] == undefined)
+            _NameData[section][page] = []
 
-        _NameData[_section][_page][index] = name
+        _NameData[section][page][index] = name
     }
 
     //% block="get name for index $index"
@@ -42,6 +77,9 @@ namespace DataLoggerPages {
     }
 
     function _getName(section: number = 0, page: number = 0, index: number = 0): string {
+        section = _uniqueSections ? section : 0;
+        page = _uniquePages ? page : 0;
+
         index = Math.clamp(0, MAX_INDEX, index)
         if (_NameData[section] == undefined)
             return ""
@@ -173,6 +211,7 @@ namespace DataLoggerPages {
 
     //% block="set board data identifier to $newUID"
     //% advanced="true"
+    //% group="Configuration"
     export function setLogWithUID(newUID: string) {
         _UID = newUID
     }
@@ -180,6 +219,7 @@ namespace DataLoggerPages {
     //% block="save data with group IDs $useGroup"
     //% useGroup.shadow="toggleYesNo"
     //% advanced="true"
+    //% group="Configuration"
     export function setLogWithSaveGroup( useGroup: boolean = false ) {
         _useGroup = useGroup
     }
@@ -187,6 +227,7 @@ namespace DataLoggerPages {
     //% block="erase flash when saving $erase"
     //% erase.shadow="toggleYesNo"
     //% advanced="true"
+    //% group="Configuration"
     export function eraseFlashOnSave( erase: boolean = true ) {
         _eraseFlashOnSave = erase
     }
