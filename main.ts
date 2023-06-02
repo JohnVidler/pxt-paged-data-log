@@ -26,6 +26,9 @@ namespace DataLoggerPages {
     let _RAMData: number[][][] = []
     let _NameData: string[][][] = []
 
+    // Callbacks
+    let _saveHandler: ((section: number, page: number, index: number, value: number) => void) = null;
+
     //% block="erase unsaved data"
     //% group="Data"
     export function eraseRAM() : void {
@@ -117,6 +120,17 @@ namespace DataLoggerPages {
         setData( index, getData(index) + offset )
     }
 
+    /**
+     * Sets a handler for every line saved to flash
+     */
+    //% block="on data row saved $section $page $index = $value"
+    //% draggableParameters="reporter"
+    //% advanced=true
+    //% group="Data"
+    export function onSaveData(handler: ( section:number, page:number, index:number, value:number ) => void) {
+        _saveHandler = handler;
+    }
+
     //% block="save data to disk"
     //% group="Data"
     export function saveData() {
@@ -168,6 +182,9 @@ namespace DataLoggerPages {
                     record.push(datalogger.createCV("value", value))
 
                     datalogger.logData( record )
+
+                    if( _saveHandler != null )
+                        _saveHandler( secIndex, pageIndex, index, value );
                 })
             })
         })
