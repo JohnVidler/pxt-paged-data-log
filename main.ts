@@ -131,6 +131,23 @@ namespace DataLoggerPages {
         _saveHandler = handler;
     }
 
+    export function onForEachRow(handler: (section: number, page: number, index: number, value: number) => void ) {
+        _RAMData.forEach((section, secIndex) => {
+            if (!section)
+                return
+
+            section.forEach((page, pageIndex) => {
+                if (!page)
+                    return
+
+                page.forEach((value, index) => {
+                    if (!value)
+                        return
+                });
+            });
+        });
+    }
+
     //% block="save data to disk"
     //% group="Data"
     export function saveData() {

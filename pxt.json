@@ -10,14 +10,15 @@
     },
     "files": [
         "README.md",
-        "main.ts"
+        "main.ts",
+        "extension.cpp.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
     "public": true,
     "targetVersions": {
-        "target": "5.0.12",
+        "target": "6.0.15",
         "targetId": "microbit"
     },
     "supportedTargets": [
