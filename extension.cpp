@@ -3,6 +3,7 @@
 
 using namespace pxt;
 
+// Comment changes to cause Makecode to notice the file!
 namespace DataLoggerPages {
     //%
     uint32_t nativeFlashLength() {
