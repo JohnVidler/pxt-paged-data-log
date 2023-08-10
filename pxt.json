@@ -11,7 +11,8 @@
     "files": [
         "README.md",
         "main.ts",
-        "extension.cpp"
+        "extension.cpp",
+        "extension.h"
     ],
     "testFiles": [
         "test.ts"
