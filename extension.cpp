@@ -18,8 +18,7 @@ namespace DataLoggerPages {
 #endif
     }
 
-    //%
-    uint32_t readLogLine( char * buffer, int length, uint32_t start ) {
+    int readLogLine( ManagedString buffer, int start ) {
 #if MICROBIT_CODAL
         int remainingFlash = uBit.log.getDataLength( DataFormat::CSV ) - start;
 
@@ -32,7 +31,7 @@ namespace DataLoggerPages {
             remainingFlash = remainingFlash - readLen;
 
             for( int j=0; j<l; j++ ) {
-                *buffer++ = _block[j];
+                buffer += _block[j];
                 if( _block[j] == '\n' )
                     return i+j;
             }
@@ -47,7 +46,7 @@ namespace DataLoggerPages {
     }
 
     //%
-    long getFlashTally( int page, int section, int index, char * column ) {
+    long getFlashTally( int page, int section, int index, ManagedString column ) {
     }
 
 }
