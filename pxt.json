@@ -12,7 +12,8 @@
         "README.md",
         "main.ts",
         "extension.cpp",
-        "extension.h"
+        "extension.h",
+        "shims.d.ts"
     ],
     "testFiles": [
         "test.ts"
