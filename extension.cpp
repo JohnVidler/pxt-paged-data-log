@@ -17,7 +17,7 @@ namespace DataLoggerPages {
         return 0;
 #endif
     }
-/*
+
     //%
     uint32_t readLogLine( char * buffer, int length, uint32_t start ) {
 #if MICROBIT_CODAL
@@ -46,7 +46,8 @@ namespace DataLoggerPages {
 #endif
     }
 
-    //long getFlashTally( int page, int section, int index, char * column ) {
-    //}*/
+    //%
+    long getFlashTally( int page, int section, int index, char * column ) {
+    }
 
 }

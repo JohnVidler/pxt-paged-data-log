@@ -266,7 +266,8 @@ namespace DataLoggerPages {
         _eraseFlashOnSave = erase
     }
 
-    //% shim=DataLoggerPages::nativeFlashLength()
+    //% shim=DataLoggerPages::nativeFlashLength
     export function nativeFlashLength() {
+
     }
 }
